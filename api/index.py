@@ -20,7 +20,10 @@ class RequestContextMiddleware(BaseHTTPMiddleware):
 class CustomCORSMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         origin = request.headers.get("origin")
-        allowed_origins = ["https://app-cq9cj0.example.com"]
+        allowed_origins = [
+            "https://app-cq9cj0.example.com",
+            "https://REPLACE_WITH_EXAM_ORIGIN.com",
+        ]
         is_allowed = origin in allowed_origins
         if request.method == "OPTIONS":
             if is_allowed:
@@ -68,6 +71,8 @@ app.add_middleware(RateLimitMiddleware)
 
 
 @app.get("/ping")
+@app.get("/api/index")
+@app.get("/api/index.py")
 async def ping(request: Request):
     return {
         "email": "23f3002742@ds.study.iitm.ac.in",
